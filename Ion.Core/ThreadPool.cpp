@@ -1,14 +1,14 @@
 #include "pch.h"
 #include "ThreadPool.h"
 
-inline ThreadPool::ThreadPool(unsigned int desiredWorkerCount)
+ ThreadPool::ThreadPool(unsigned int desiredWorkerCount)
 	: m_workerCount(desiredWorkerCount)
 {
 	m_workerThreads.reserve(m_workerCount);
 	IntiateWork();
 }
 
-inline ThreadPool::ThreadPool()
+ ThreadPool::ThreadPool()
 {
 	const unsigned int cores = std::thread::hardware_concurrency();
 
@@ -19,7 +19,7 @@ inline ThreadPool::ThreadPool()
 
 }
 
-inline ThreadPool::~ThreadPool()
+ ThreadPool::~ThreadPool()
 {
 	m_taskQueue.shutdown();
 
@@ -32,12 +32,12 @@ inline ThreadPool::~ThreadPool()
 
 
 
-inline void ThreadPool::submit(Task task)
+ void ThreadPool::submit(Task task)
 {
 	m_taskQueue.push(std::move(task));
 }
 
-inline void ThreadPool::IntiateWork()
+ void ThreadPool::IntiateWork()
 {
 	auto workerAction = [this]() {
 
