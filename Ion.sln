@@ -1,9 +1,12 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
-VisualStudioVersion = 17.14.36811.4 d17.14
+VisualStudioVersion = 17.14.36811.4
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Ion.Sandbox", "Ion\Ion.vcxproj", "{F350C2D6-8C66-482C-B03D-688CD87D9303}"
+	ProjectSection(ProjectDependencies) = postProject
+		{B230420D-2081-4F34-9E22-A4CF8537A2BB} = {B230420D-2081-4F34-9E22-A4CF8537A2BB}
+	EndProjectSection
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Ion.Core", "Ion.Core\Ion.Core.vcxproj", "{B230420D-2081-4F34-9E22-A4CF8537A2BB}"
 EndProject
