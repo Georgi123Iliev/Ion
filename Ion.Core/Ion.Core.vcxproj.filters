@@ -13,6 +13,15 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
+    <Filter Include="Threading">
+      <UniqueIdentifier>{b717ec27-4638-4786-89a2-8e29a643be39}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Net">
+      <UniqueIdentifier>{a2ea22e7-6d75-41ad-a013-afa57288ef9f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Net\Handles">
+      <UniqueIdentifier>{a8725dbb-1393-47d4-835c-14c17b4fbe5d}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="framework.h">
@@ -27,6 +36,12 @@
     <ClInclude Include="ThreadPool.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="Threading\SafeQueue.h">
+      <Filter>Threading</Filter>
+    </ClInclude>
+    <ClInclude Include="Threading\ThreadPool.h">
+      <Filter>Threading</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Ion.Core.cpp">
@@ -35,11 +50,11 @@
     <ClCompile Include="pch.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="SafeQueue.cpp">
-      <Filter>Source Files</Filter>
+    <ClCompile Include="Threading\SafeQueue.cpp">
+      <Filter>Threading</Filter>
     </ClCompile>
-    <ClCompile Include="ThreadPool.cpp">
-      <Filter>Source Files</Filter>
+    <ClCompile Include="Threading\ThreadPool.cpp">
+      <Filter>Threading</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>
