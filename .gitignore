@@ -10,3 +10,5 @@ Release/
 *.tlog
 *.log
 test-results/
+packages/
+*.nupkg
