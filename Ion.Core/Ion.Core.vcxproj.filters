@@ -30,16 +30,16 @@
     <ClInclude Include="framework.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Threading\SafeQueue.h">
+    <ClInclude Include="Threading\SafeQueue.hpp">
       <Filter>Threading</Filter>
     </ClInclude>
-    <ClInclude Include="Threading\ThreadPool.h">
+    <ClInclude Include="Threading\ThreadPool.hpp">
       <Filter>Threading</Filter>
     </ClInclude>
     <ClInclude Include="pch.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Descriptor.h">
+    <ClInclude Include="Descriptor.hpp">
       <Filter>Utility</Filter>
     </ClInclude>
   </ItemGroup>

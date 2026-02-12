@@ -4,7 +4,7 @@
 #include <chrono>
 #include <array>
 
-#include "Threading/SafeQueue.h"
+#include "Threading/SafeQueue.hpp"
 
 using namespace Ion::Threading;
 

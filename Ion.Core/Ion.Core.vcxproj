@@ -163,11 +163,11 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClInclude Include="Descriptor.h" />
+    <ClInclude Include="Descriptor.hpp" />
     <ClInclude Include="framework.h" />
     <ClInclude Include="pch.h" />
-    <ClInclude Include="Threading\SafeQueue.h" />
-    <ClInclude Include="Threading\ThreadPool.h" />
+    <ClInclude Include="Threading\SafeQueue.hpp" />
+    <ClInclude Include="Threading\ThreadPool.hpp" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Descriptor.cpp" />
