@@ -1,0 +1,31 @@
+---
+# Enable Core Guidelines, Modernize, Bugprone, Performance, and Google Test checks.
+Checks: >
+  cppcoreguidelines-*,
+  bugprone-*,
+  modernize-*,
+  performance-*,
+  googletest-*,
+  readability-*,
+  -modernize-use-trailing-return-type,
+  -cppcoreguidelines-avoid-magic-numbers,
+  -readability-magic-numbers,
+  -cppcoreguidelines-pro-bounds-pointer-arithmetic,
+  -cppcoreguidelines-pro-type-union-access,
+  -cppcoreguidelines-macro-usage
+
+# Treat warnings as errors to force discipline (like Rust)
+WarningsAsErrors: '*'
+
+# Only analyze headers that belong to 'Ion' (prevents scanning Windows SDK/STL)
+HeaderFilterRegex: 'Ion.*'
+
+# Enforce standard naming conventions (Optional - adjust to your preference)
+CheckOptions:
+  - key:   readability-identifier-naming.ClassCase
+    value: PascalCase
+  - key:   readability-identifier-naming.MethodCase
+    value: PascalCase
+  - key:   readability-identifier-naming.PrivateMemberSuffix
+    value: '_'
+...

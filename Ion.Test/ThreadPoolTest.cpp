@@ -8,6 +8,7 @@
 #include <chrono>
 #include <iostream>
 
+using namespace Ion::Threading;
 
 TEST(ThreadPoolTest, BasicFunctionality)
 {
@@ -27,8 +28,10 @@ TEST(ThreadPoolTest, BasicFunctionality)
 
 		for (int i = 0; i < 1000; i++)
 		{
-			threadPool.submit(increment);
+			threadPool.dispatch(increment);
 		}
+
+		//Destroying the threadpool will join all threads until no tasks are left to do.
 	}
 
 	ASSERT_EQ(counter, 1000);
@@ -54,7 +57,7 @@ TEST(ThreadPoolTest, TrueParallelism)
 
 		for (int i = 0; i < 30; i++)
 		{
-			threadPool.submit(timeConsumingTask);
+			threadPool.dispatch(timeConsumingTask);
 		}
 
 		
@@ -103,4 +106,37 @@ TEST(ThreadPoolTest, Returns)
 
 	
 	
+}
+
+struct Func {
+	inline static int instanceCount{ 0 };
+	inline static int moveCount{ 0 };
+
+	Func() { instanceCount++; }
+
+	// Triggered when passing 'func' directly
+	Func(const Func& other) { instanceCount++; }
+
+	// Triggered when passing 'std::move(func)' or returning from a function
+	Func(Func&& other) noexcept {
+		//instanceCount++; not a 'real' instance
+		moveCount++;
+	}
+
+	void operator()() {}
+}func;
+
+TEST(ThreadPoolTest, DisplayingCopies)
+{
+	
+
+	ThreadPool tp;
+
+	tp.dispatch(func);
+
+	tp.submit(func);
+
+	FAIL() << func.instanceCount << " " << func.moveCount;
+
+
 }

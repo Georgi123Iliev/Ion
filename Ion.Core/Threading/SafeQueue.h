@@ -13,11 +13,11 @@ namespace Ion::Threading
 
 
 	template<typename T>
-		requires std::movable<T>
+	requires std::movable<T>
 	class SafeQueue
 	{
-	public:
-
+		public:
+	
 
 		 template<typename U>
 		 requires std::convertible_to<U,T>
@@ -39,7 +39,7 @@ namespace Ion::Threading
 
 			return true;
 
-		}
+		 }
 
 
 		[[nodiscard]] std::optional<T> pop()
@@ -72,9 +72,11 @@ namespace Ion::Threading
 
 		void shutdown()
 		{
-			std::unique_lock<std::mutex> lock(m_mutex);
-			stop = true;
-			lock.unlock();
+			{
+				const std::lock_guard<std::mutex> lock(m_mutex);
+
+				stop = true;
+			}
 			m_conditionVariable.notify_all();
 		}
 

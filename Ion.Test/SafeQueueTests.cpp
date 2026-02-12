@@ -6,7 +6,7 @@
 
 #include "Threading/SafeQueue.h"
 
-
+using namespace Ion::Threading;
 
 TEST(SafeQueueTest, SanityCheckFIFO) {
   
@@ -70,7 +70,7 @@ TEST(SafeQueueTest, ShutdownEmptyQueue)
 			{
 				auto val = safeQueue.pop();
 
-				wasNullOpt = val == std::nullopt;
+				wasNullOpt = (val == std::nullopt);
 				
 			}
 		);

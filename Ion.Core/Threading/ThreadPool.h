@@ -7,71 +7,75 @@
 
 #include "SafeQueue.h"
 
-
-using Task = std::function<void()>;
-
-using TaskQueue = SafeQueue<Task>;
-
-template<typename Callable>
-concept NonVoidCallable =
-std::invocable<Callable> && !std::is_same<std::invoke_result_t<Callable>, void>::value;
-
-
-
-
-class ThreadPool
+namespace Ion::Threading
 {
 
-public:
+	using Task = std::function<void()>;
 
-	ThreadPool(unsigned int desiredWorkerCount);
+	using TaskQueue = SafeQueue<Task>;
 
-	ThreadPool();
+	
 
-	~ThreadPool();
 
-	[[nodiscard]]
-	auto getWorkerCount() const noexcept
-	{
-		return m_workerCount;
-	}
 
-	void submit(Task task);
-
-	template<NonVoidCallable Callable>
-	[[nodiscard]] std::future<std::invoke_result_t<Callable>> submit(Callable callable) 
+	class ThreadPool
 	{
 
-		using returnType = std::invoke_result_t<Callable>;
+	public:
+
+		ThreadPool(unsigned int desiredWorkerCount);
+
+		ThreadPool();
+
+		~ThreadPool();
+
+		[[nodiscard]]
+		auto getWorkerCount() const noexcept
+		{
+
+			return m_workerCount;
+		}
+
+		void dispatch(Task task);
+
+		template<typename Callable>
+		requires std::invocable<Callable>
+		[[nodiscard("Discarding std::future returned. This method should be used only when you need a result/confirmation task has finished")]]
+		std::future<std::invoke_result_t<Callable>> submit(Callable callable)
+		{
+
+			using returnType = std::invoke_result_t<Callable>;
+
+			auto pkgTaskSharedPtr = std::make_shared<std::packaged_task<returnType()>>(std::move(callable));
+
+			auto futureResult = pkgTaskSharedPtr->get_future();
+
+			auto wrapper = [pkgTaskSharedPtr]() { (*pkgTaskSharedPtr)(); };
+
+			dispatch(wrapper);
+
+			return futureResult;
+		}
 		
-		auto pkgTaskSharedPtr = std::make_shared<std::packaged_task<returnType()>>(std::move(callable));		
-		
-		auto futureResult = pkgTaskSharedPtr->get_future();
-
-		auto wrapper = [pkgTaskSharedPtr]() { (*pkgTaskSharedPtr)(); };
-
-		submit(wrapper);
-
-		return futureResult;
-	}
-
-	
-
-
-private:
-	std::vector<std::jthread> m_workerThreads;
-	
-	TaskQueue m_taskQueue;
 
 
 
-	unsigned int m_workerCount;
+	private:
+		std::vector<std::jthread> m_workerThreads;
 
-	void IntiateWork();
-
-
-	
+		TaskQueue m_taskQueue;
 
 
-};
 
+		unsigned int m_workerCount;
+
+		void IntiateWork();
+
+
+
+
+
+
+	};
+
+}

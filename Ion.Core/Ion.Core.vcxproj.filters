@@ -13,27 +13,21 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
-    <Filter Include="Threading">
-      <UniqueIdentifier>{b717ec27-4638-4786-89a2-8e29a643be39}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Net">
       <UniqueIdentifier>{a2ea22e7-6d75-41ad-a013-afa57288ef9f}</UniqueIdentifier>
     </Filter>
     <Filter Include="Net\Handles">
       <UniqueIdentifier>{a8725dbb-1393-47d4-835c-14c17b4fbe5d}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Threading">
+      <UniqueIdentifier>{b717ec27-4638-4786-89a2-8e29a643be39}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Utility">
+      <UniqueIdentifier>{f63c1d98-cc28-4c72-b7eb-47f10bab3a86}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="framework.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="pch.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="SafeQueue.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="ThreadPool.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Threading\SafeQueue.h">
@@ -41,6 +35,12 @@
     </ClInclude>
     <ClInclude Include="Threading\ThreadPool.h">
       <Filter>Threading</Filter>
+    </ClInclude>
+    <ClInclude Include="pch.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Descriptor.h">
+      <Filter>Utility</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -55,6 +55,12 @@
     </ClCompile>
     <ClCompile Include="Threading\ThreadPool.cpp">
       <Filter>Threading</Filter>
+    </ClCompile>
+    <ClCompile Include="Descriptor.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Source.cpp">
+      <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>
