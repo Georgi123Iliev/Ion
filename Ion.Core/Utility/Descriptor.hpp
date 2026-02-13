@@ -4,19 +4,29 @@
 #include <utility>
 #include <optional>
 
+#include "Utility/nttp_callable_traits.hpp"
+
 
 
 namespace Ion::Utility
 {
+
+
+
+
+
+	
+	 
+
+
+	
 	template<auto F, typename T>
-	concept CallableWithT = requires
-	{
-		F(std::declval<T>());
-	};
+	concept CallableWithExactlyT =
+	std::invocable<decltype(F), T> && std::same_as<T, inspector_t<F, 0>>;
 
 	
 	template<typename T, auto closeRawDescriptor, T InvalidValue>
-		requires CallableWithT<closeRawDescriptor, T>
+	requires CallableWithExactlyT<closeRawDescriptor,T>
 	class Descriptor
 	{
 	private:
@@ -55,7 +65,7 @@ namespace Ion::Utility
 			
 		}
 
-		[[nodiscard]] T get() const
+		[[nodiscard]] T get() const noexcept
 		{
 			return m_rawDescriptor;
 		}

@@ -12,7 +12,7 @@ using LinuxFileDescriptor = Descriptor<int, _close, -1>;
 TEST(DescriptorTests, BasicTest) {
 	
     
-    auto mockDeleter = [](int d) { SUCCEED() << "close ran"; };
+    using StupidSocket = Descriptor<char, _close, 'a'>;
 
 
     
