@@ -17,7 +17,6 @@ using namespace Ion::Utility;
 using LinuxSocket = Descriptor<int, _close, -1>;
 using LinuxFileDescriptor = Descriptor<int, _close, -1>;
 // using StupidSocket = Descriptor<char, _close, 'a'>; //this will now fail because _close(char) is not the exact signature
-using AddrInfoDescriptor = Descriptor<struct addrinfo*, freeaddrinfo, nullptr>;
 TEST(DescriptorTests, BasicTest) {
 
     /*
@@ -91,8 +90,6 @@ TEST(DescriptorTests, BasicTest) {
         WSACleanup();
         return;
     }
-
-    std::unique_ptr<addrinfo,> smart_res(res,freeaddrinfo);
   
   
 
