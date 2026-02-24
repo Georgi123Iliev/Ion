@@ -143,7 +143,7 @@ TEST(SafeQueueTest, PushAfterShutdown)
 
 	safeQueue.shutdown();
 
-	EXPECT_THROW(safeQueue.push(42), std::runtime_error);
+	GTEST_ASSERT_EQ(safeQueue.push(42), false);
 
 	
 }

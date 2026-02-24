@@ -7,6 +7,7 @@
 #include <thread>
 #include <chrono>
 #include <iostream>
+#include <utility>
 
 using namespace Ion::Threading;
 
@@ -140,3 +141,16 @@ TEST(ThreadPoolTest, DisplayingCopies)
 
 
 }
+
+TEST(ThreadPoolTest, MoveOnlyCallable)
+{
+	ThreadPool tp;
+
+	std::unique_ptr<int> data = std::make_unique<int>();
+	
+	auto x = [data = std::move(data)]() {};
+	
+
+	tp.dispatch(std::move(x));
+}
+

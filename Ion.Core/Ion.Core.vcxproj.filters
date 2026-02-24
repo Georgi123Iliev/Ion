@@ -16,14 +16,17 @@
     <Filter Include="Net">
       <UniqueIdentifier>{a2ea22e7-6d75-41ad-a013-afa57288ef9f}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Net\Handles">
-      <UniqueIdentifier>{a8725dbb-1393-47d4-835c-14c17b4fbe5d}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Threading">
       <UniqueIdentifier>{b717ec27-4638-4786-89a2-8e29a643be39}</UniqueIdentifier>
     </Filter>
     <Filter Include="Utility">
-      <UniqueIdentifier>{f63c1d98-cc28-4c72-b7eb-47f10bab3a86}</UniqueIdentifier>
+      <UniqueIdentifier>{8d63530a-9aca-4af7-b3ce-db897e7c5fb0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Net\TCP">
+      <UniqueIdentifier>{a8725dbb-1393-47d4-835c-14c17b4fbe5d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Net\Exceptions">
+      <UniqueIdentifier>{d54221ef-af2c-47d5-86f7-73c76b1ced85}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -39,8 +42,20 @@
     <ClInclude Include="pch.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Descriptor.hpp">
+    <ClInclude Include="Utility\Descriptor.hpp">
       <Filter>Utility</Filter>
+    </ClInclude>
+    <ClInclude Include="Utility\nttp_callable_traits.hpp">
+      <Filter>Utility</Filter>
+    </ClInclude>
+    <ClInclude Include="Net\Exceptions\NetworkException.hpp">
+      <Filter>Net\Exceptions</Filter>
+    </ClInclude>
+    <ClInclude Include="Net\TCP\TcpAcceptor.hpp">
+      <Filter>Net\TCP</Filter>
+    </ClInclude>
+    <ClInclude Include="Net\TCP\TcpConnection.hpp">
+      <Filter>Net\TCP</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -56,11 +71,20 @@
     <ClCompile Include="Threading\ThreadPool.cpp">
       <Filter>Threading</Filter>
     </ClCompile>
-    <ClCompile Include="Descriptor.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="Source.cpp">
       <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Utility\Descriptor.cpp">
+      <Filter>Utility</Filter>
+    </ClCompile>
+    <ClCompile Include="Net\Exceptions\NetworkException.cpp">
+      <Filter>Net\Exceptions</Filter>
+    </ClCompile>
+    <ClCompile Include="Net\TCP\TcpAcceptor_win.cpp">
+      <Filter>Net\TCP</Filter>
+    </ClCompile>
+    <ClCompile Include="Net\TCP\TcpConnection_win.cpp">
+      <Filter>Net\TCP</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

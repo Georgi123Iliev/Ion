@@ -3,14 +3,15 @@
 #include <thread>
 #include <concepts>
 #include <future>
+#include <functional>
 #include<memory>
 
-#include "SafeQueue.h"
+#include "SafeQueue.hpp"
 
 namespace Ion::Threading
 {
 
-	using Task = std::function<void()>;
+	using Task = std::move_only_function<void()>;
 
 	using TaskQueue = SafeQueue<Task>;
 
@@ -32,7 +33,6 @@ namespace Ion::Threading
 		[[nodiscard]]
 		auto getWorkerCount() const noexcept
 		{
-
 			return m_workerCount;
 		}
 
@@ -43,16 +43,15 @@ namespace Ion::Threading
 		[[nodiscard("Discarding std::future returned. This method should be used only when you need a result/confirmation task has finished")]]
 		std::future<std::invoke_result_t<Callable>> submit(Callable callable)
 		{
-
 			using returnType = std::invoke_result_t<Callable>;
 
-			auto pkgTaskSharedPtr = std::make_shared<std::packaged_task<returnType()>>(std::move(callable));
+			auto pkgTask = std::packaged_task<returnType()>(std::move(callable));
 
-			auto futureResult = pkgTaskSharedPtr->get_future();
+			auto futureResult = pkgTask.get_future();
 
-			auto wrapper = [pkgTaskSharedPtr]() { (*pkgTaskSharedPtr)(); };
+			auto wrapper = [Task = std::move(pkgTask)]() mutable { Task(); };
 
-			dispatch(wrapper);
+			dispatch(std::move(wrapper));
 
 			return futureResult;
 		}
@@ -69,7 +68,7 @@ namespace Ion::Threading
 
 		unsigned int m_workerCount;
 
-		void IntiateWork();
+		void InitiateWork();
 
 
 

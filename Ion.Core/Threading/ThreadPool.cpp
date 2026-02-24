@@ -9,7 +9,7 @@ namespace Ion::Threading
 		: m_workerCount(desiredWorkerCount)
 	{
 		m_workerThreads.reserve(m_workerCount);
-		IntiateWork();
+		InitiateWork();
 	}
 
 	ThreadPool::ThreadPool()
@@ -20,7 +20,7 @@ namespace Ion::Threading
 
 		m_workerThreads.reserve(m_workerCount);
 
-		IntiateWork();
+		InitiateWork();
 
 	}
 
@@ -40,7 +40,7 @@ namespace Ion::Threading
 		m_taskQueue.push(std::move(task));
 	}
 
-	void ThreadPool::IntiateWork()
+	void ThreadPool::InitiateWork()
 	{
 		auto workerAction = [&taskQueue = m_taskQueue]() {
 
