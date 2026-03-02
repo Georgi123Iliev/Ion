@@ -57,6 +57,12 @@
     <ClInclude Include="Net\TCP\TcpConnection.hpp">
       <Filter>Net\TCP</Filter>
     </ClInclude>
+    <ClInclude Include="Net\Types.hpp">
+      <Filter>Net</Filter>
+    </ClInclude>
+    <ClInclude Include="Net\NetworkEnvironment.hpp">
+      <Filter>Net</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Ion.Core.cpp">
@@ -85,6 +91,9 @@
     </ClCompile>
     <ClCompile Include="Net\TCP\TcpConnection_win.cpp">
       <Filter>Net\TCP</Filter>
+    </ClCompile>
+    <ClCompile Include="Net\NetworkEnvironment_win.cpp">
+      <Filter>Net</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

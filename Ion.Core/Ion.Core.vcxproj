@@ -164,9 +164,11 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="framework.h" />
+    <ClInclude Include="Net\NetworkEnvironment.hpp" />
     <ClInclude Include="Net\Exceptions\NetworkException.hpp" />
     <ClInclude Include="Net\TCP\TcpAcceptor.hpp" />
     <ClInclude Include="Net\TCP\TcpConnection.hpp" />
+    <ClInclude Include="Net\Types.hpp" />
     <ClInclude Include="pch.h" />
     <ClInclude Include="Threading\SafeQueue.hpp" />
     <ClInclude Include="Threading\ThreadPool.hpp" />
@@ -180,6 +182,7 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Use</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Use</PrecompiledHeader>
     </ClCompile>
+    <ClCompile Include="Net\NetworkEnvironment_win.cpp" />
     <ClCompile Include="Net\Exceptions\NetworkException.cpp" />
     <ClCompile Include="Net\TCP\TcpAcceptor_win.cpp" />
     <ClCompile Include="Net\TCP\TcpConnection_win.cpp" />

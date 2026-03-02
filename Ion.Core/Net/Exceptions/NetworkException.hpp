@@ -1,20 +1,26 @@
 #pragma once
 #include<stdexcept>
 #include<system_error>
-class NetworkException : std::runtime_error
+
+namespace Ion::Net //::Exceptions?
 {
-public:
-	NetworkException(const char* msg, std::error_code err)
-		: std::runtime_error(msg), err(err)
-	{}
 
-	auto getErr() const noexcept
+	class NetworkException : std::runtime_error
 	{
-		return err;
-	}
+	public:
+		NetworkException(const char* msg, std::error_code err)
+			: std::runtime_error(msg), m_err(err)
+		{
+		}
 
-private:
-	std::error_code err;
+		auto getErr() const noexcept
+		{
+			return m_err;
+		}
 
-};
+	private:
+		std::error_code m_err;
+
+	};
+}
 

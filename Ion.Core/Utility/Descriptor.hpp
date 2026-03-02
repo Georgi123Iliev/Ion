@@ -59,10 +59,9 @@ namespace Ion::Utility
 		{
 		}
 
-		explicit Descriptor(T descriptor)
+		explicit Descriptor(T descriptor) noexcept
+			: m_rawDescriptor(descriptor)
 		{
-			m_rawDescriptor = descriptor;
-			
 		}
 
 		[[nodiscard]] T get() const noexcept

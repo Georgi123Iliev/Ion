@@ -100,9 +100,11 @@ TEST(ThreadPoolTest, Returns)
 	ASSERT_EQ(x, 42);
 
 
-	/*Ignored result*/ threadPool.submit(returningAction);
+	/*Ignored result*/ 
 
-	threadPool.submit(nonReturningAction);
+	std::ignore = threadPool.submit(returningAction);
+
+	std::ignore = threadPool.submit(nonReturningAction);
 
 
 	
@@ -135,7 +137,7 @@ TEST(ThreadPoolTest, DisplayingCopies)
 
 	tp.dispatch(func);
 
-	tp.submit(func);
+	std::ignore = tp.submit(func);
 
 	FAIL() << func.instanceCount << " " << func.moveCount;
 
