@@ -13,47 +13,50 @@
 
 #include<stdexcept>
 
-
-class NetworkEnvironment::EnvironmentImpl
+namespace Ion::Net
 {
-public:
 
-	EnvironmentImpl()
+	class NetworkEnvironment::EnvironmentImpl
 	{
-		using namespace Ion::Net;
+	public:
 
-		//WSAStartup params
-		int wsaResult;
-		WORD wVersionRequested = MAKEWORD(2, 2); //version 2.2 of winsockets
-		WSADATA wsaData;
-
-		wsaResult = WSAStartup(
-			wVersionRequested,
-			&wsaData
-		);
-
-		if (0 != wsaResult)
+		EnvironmentImpl()
 		{
-			throw NetworkException("Setting up socket environment in windows failed. WSAStartup"
-				, std::error_code(wsaResult, std::system_category()));
+
+
+			//WSAStartup params
+			int wsaResult;
+			WORD wVersionRequested = MAKEWORD(2, 2); //version 2.2 of winsockets
+			WSADATA wsaData;
+
+			wsaResult = WSAStartup(
+				wVersionRequested,
+				&wsaData
+			);
+
+			if (0 != wsaResult)
+			{
+				throw NetworkException("Setting up socket environment in windows failed. WSAStartup"
+					, std::error_code(wsaResult, std::system_category()));
+			}
 		}
-	}
 
-	~EnvironmentImpl()
+		~EnvironmentImpl()
+		{
+			WSACleanup();
+		}
+	};
+
+	NetworkEnvironment::NetworkEnvironment()
 	{
-		WSACleanup();
-	}
-};
+		if (m_exists)
+		{
+			throw(std::logic_error("Only one environment can exist at a time"));
+		}
 
-NetworkEnvironment::NetworkEnvironment()
-{
-	if (m_exists)
-	{
-		throw(std::logic_error("Only one environment can exist at a time"));
+		m_impl = std::make_unique<EnvironmentImpl>();
+		m_exists.store(true);
 	}
 
-	m_impl = std::make_unique<EnvironmentImpl>();
-	m_exists.store(true);
+	NetworkEnvironment::~NetworkEnvironment() = default;
 }
-
-NetworkEnvironment::~NetworkEnvironment() = default;
