@@ -23,8 +23,8 @@ namespace Ion::Net::TCP
 
 	private:
 
-		class TcpAcceptorImpl;
 		const NetworkEnvironment* m_env;
+		class TcpAcceptorImpl;
 		std::unique_ptr<TcpAcceptorImpl> impl;
 
 

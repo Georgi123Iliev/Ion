@@ -1,11 +1,10 @@
 #include "pch.h"
 
-#include <winsock2.h>
-#include <ws2tcpip.h>
 #define WIN32_LEAN_AND_MEAN  // Say this...
 
 #include <windows.h>         // And now we can include that.
 #include <winsock2.h>        // And this.
+#include <ws2tcpip.h>
 
 #pragma comment(lib, "ws2_32.lib")
 
@@ -146,7 +145,7 @@ namespace Ion::Net::TCP
 
 
 	TcpAcceptor::TcpAcceptor(const NetworkEnvironment& env)
-		: impl(std::make_unique<TcpAcceptorImpl>()),m_env(&env)
+		: m_env(&env),impl(std::make_unique<TcpAcceptorImpl>())
 	{
 
 	}
@@ -157,6 +156,10 @@ namespace Ion::Net::TCP
 	{
 		auto res = impl->implAccept();
 
-		return TcpConnection(res.value(),*m_env);
+		if (!res)
+			return std::unexpected(res.error());
+
+		return TcpConnection(res.value(), *m_env);
+		
 	}
 }

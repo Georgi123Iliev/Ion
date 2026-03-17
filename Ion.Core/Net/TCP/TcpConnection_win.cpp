@@ -1,9 +1,10 @@
 #include "pch.h"
 
 #include <expected>
+#include <limits>
 
 #include <winsock2.h>
-#include <ws2tcpip.h>
+#include <ws2tcpip.h>  
 #define WIN32_LEAN_AND_MEAN  // Say this...
 
 #include <windows.h>         // And now we can include that.
@@ -44,6 +45,17 @@ namespace Ion::Net::TCP
 	
 		RecvResult_t recv(std::span<std::byte> buffer)
 		{
+
+#ifdef max
+#undef max
+#endif // max
+
+			if (buffer.size() > static_cast<size_t>(std::numeric_limits<int>::max()))
+			{
+				//
+			}
+
+
 
 			//avoid narrowing
 			//reinterpret cast fine here???
@@ -98,7 +110,7 @@ namespace Ion::Net::TCP
 	}
 
 	TcpConnection::TcpConnection(Net::Types::OpaqueHandle opaqueHandle, const NetworkEnvironment& env)
-		:m_impl(std::make_unique<TcpConnectionImpl>(opaqueHandle)),m_env(&env)
+		:m_env(&env),m_impl(std::make_unique<TcpConnectionImpl>(opaqueHandle))
 	{
 	}
 
@@ -109,7 +121,7 @@ namespace Ion::Net::TCP
 		return m_impl->recv(buffer);
 	}
 
-	SendResult_t TcpConnection::send(std::span< const std::byte> buffer)
+	SendResult_t TcpConnection::send(std::span<const std::byte> buffer)
 	{
 		return m_impl->send(buffer);
 	}
