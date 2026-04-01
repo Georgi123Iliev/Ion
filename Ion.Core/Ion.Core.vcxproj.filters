@@ -28,6 +28,9 @@
     <Filter Include="Net\Exceptions">
       <UniqueIdentifier>{d54221ef-af2c-47d5-86f7-73c76b1ced85}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Net\HTTP">
+      <UniqueIdentifier>{5028645f-d9c7-4cde-bf1c-64c9837722fd}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="framework.h">
@@ -63,6 +66,42 @@
     <ClInclude Include="Net\NetworkEnvironment.hpp">
       <Filter>Net</Filter>
     </ClInclude>
+    <ClInclude Include="Parsing\picohttpparser.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Parsing\ParsingWrapper.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Utility\Conversions.hpp">
+      <Filter>Utility</Filter>
+    </ClInclude>
+    <ClInclude Include="Net\Constants.hpp">
+      <Filter>Net</Filter>
+    </ClInclude>
+    <ClInclude Include="Net\HTTP\RequestReader.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Net\HTTP\HttpRequest.hpp">
+      <Filter>Net\HTTP</Filter>
+    </ClInclude>
+    <ClInclude Include="Net\HTTP\HttpResponse.hpp">
+      <Filter>Net\HTTP</Filter>
+    </ClInclude>
+    <ClInclude Include="Net\HTTP\HttpServer.hpp">
+      <Filter>Net\HTTP</Filter>
+    </ClInclude>
+    <ClInclude Include="Net\HTTP\HttpTypes.hpp">
+      <Filter>Net\HTTP</Filter>
+    </ClInclude>
+    <ClInclude Include="HttpContext.hpp">
+      <Filter>Net\HTTP</Filter>
+    </ClInclude>
+    <ClInclude Include="Net\HTTP\Router.hpp">
+      <Filter>Net\HTTP</Filter>
+    </ClInclude>
+    <ClInclude Include="Net\HTTP\RouterBuilder.hpp">
+      <Filter>Net\HTTP</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Ion.Core.cpp">
@@ -94,6 +133,42 @@
     </ClCompile>
     <ClCompile Include="Net\NetworkEnvironment_win.cpp">
       <Filter>Net</Filter>
+    </ClCompile>
+    <ClCompile Include="Parsing\FileName.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Parsing\picohttpparser.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Parsing\ParsingWrapper.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Net\HTTP\HttpServer.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Net\HTTP\Router.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Net\HTTP\RequestReader.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Net\HTTP\HttpResponse.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Utility\Conversions.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="RouterBuilder.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="HttpContext.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Net\NetworkEnvironment_lin.cpp">
+      <Filter>Net</Filter>
+    </ClCompile>
+    <ClCompile Include="Net\HTTP\HttpTypes.cpp">
+      <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>
