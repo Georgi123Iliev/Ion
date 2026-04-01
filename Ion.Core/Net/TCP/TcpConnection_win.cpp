@@ -3,6 +3,8 @@
 #include <expected>
 #include <limits>
 
+#define NOMINMAX
+
 #include <winsock2.h>
 #include <ws2tcpip.h>  
 #define WIN32_LEAN_AND_MEAN  // Say this...
@@ -46,13 +48,10 @@ namespace Ion::Net::TCP
 		RecvResult_t recv(std::span<std::byte> buffer)
 		{
 
-#ifdef max
-#undef max
-#endif // max
 
-			if (buffer.size() > static_cast<size_t>(std::numeric_limits<int>::max()))
+			if (buffer.size() > std::numeric_limits<int>::max())
 			{
-				//
+				
 			}
 
 
@@ -79,7 +78,17 @@ namespace Ion::Net::TCP
 
 
 			//avoid narrowing
-			auto bytesCount = ::send(m_ws.get(), reinterpret_cast<const char*>(buffer.data()), buffer.size(), 0);
+
+			if (buffer.size() > std::numeric_limits<int>::max())
+			{
+				return std::unexpected(std::error_code());
+			}
+
+			int buffer_size = static_cast<int>(buffer.size());
+
+
+
+			auto bytesCount = ::send(m_ws.get(), reinterpret_cast<const char*>(buffer.data()), buffer_size, 0);
 
 			if (SOCKET_ERROR == bytesCount)
 			{

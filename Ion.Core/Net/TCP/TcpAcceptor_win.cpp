@@ -131,7 +131,7 @@ namespace Ion::Net::TCP
 		
 
 	private:
-		PCSTR m_nodeName = "localhost";
+		PCSTR m_nodeName = "0.0.0.0";
 		PCSTR m_serviceName = "8080";
 
 		WinSock m_socket;

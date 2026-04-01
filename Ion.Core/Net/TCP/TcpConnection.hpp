@@ -27,13 +27,12 @@ namespace Ion::Net::TCP
 		TcpConnection& operator=(TcpConnection&& other);
 	
 		[[nodiscard]] Net::Types::OpaqueHandle getHandle() const noexcept;
-
-		
-
 		
 		[[nodiscard]] std::expected<std::span<std::byte>, std::error_code> recv(std::span<std::byte> buffer);
 
 		[[nodiscard]] std::expected<std::span<const std::byte>, std::error_code> send(std::span< const std::byte> buffer);
+
+		[[nodiscard]] bool sendfile(std::string_view filename);
 
 		~TcpConnection();
 	private:
