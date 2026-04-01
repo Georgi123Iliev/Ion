@@ -3,9 +3,12 @@
 
 #include "Net/TCP/TcpAcceptor.hpp"
 #include "Threading/ThreadPool.hpp"
+#include "Parsing/ParsingWrapper.hpp"
+#include "Utility/Conversions.hpp"
 
 using namespace Ion::Net::TCP;
 using namespace Ion::Threading;
+using namespace Ion::Net;
 
 TEST(TcpTests, GetConnection) {
 
@@ -40,10 +43,16 @@ TEST(TcpTests, GetConnection) {
 				FAIL() << "recv failed" << readBytesRes.error();
 			}
 
-			auto& readBytes = readBytesRes.value();
+			auto readBytes = readBytesRes.value();
 
 			if (readBytes.size() == 0)
 				return;
+
+
+			parse(toStringView(readBytes));
+
+			
+
 
 			//ASSERT_EQ(memcmp(readBytes.data(), message.c_str(), readBytes.size()), 0);
 
@@ -55,10 +64,10 @@ TEST(TcpTests, GetConnection) {
 
 
 	tr.dispatch(std::move(f));
-	*/
+	
 	
 
-
+	*/
 
 
 }
