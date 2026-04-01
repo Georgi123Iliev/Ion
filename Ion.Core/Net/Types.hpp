@@ -10,7 +10,8 @@ namespace Ion::Net::Types
 	enum class Method
 	{
 		GET,
-		POST
+		POST,
+		UNKNOWN
 	};
 
 	enum class Error
@@ -22,7 +23,7 @@ namespace Ion::Net::Types
 
 	struct NetError
 	{
-
+		/*
 		NetError()
 		{
 
@@ -30,6 +31,7 @@ namespace Ion::Net::Types
 
 		Error error;
 		std::error_code sys_error{};
+		*/
 	};
 
 	
