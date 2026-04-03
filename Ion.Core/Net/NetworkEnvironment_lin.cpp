@@ -4,7 +4,6 @@
 
 #if false
 #include<stdexcept>
-#include <signal.h>
 
 namespace Ion::Net
 {

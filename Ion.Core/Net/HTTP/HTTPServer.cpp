@@ -18,6 +18,9 @@ void Ion::Net::HTTP::HttpServer::run()
 
 		if (!connResult)
 		{
+			if (m_connectionAcceptor.isInterrupted())
+				break;
+
 			continue;
 		}
 

@@ -26,6 +26,9 @@ namespace Ion::Net::HTTP
 	private:
 		Router<> m_router;
 		Threading::ThreadPool m_threadPool;
+		/*
+		* env must preceed m_connectionAcceptor
+		*/
 		const NetworkEnvironment* env;
 		Net::TCP::TcpAcceptor m_connectionAcceptor;
 	};

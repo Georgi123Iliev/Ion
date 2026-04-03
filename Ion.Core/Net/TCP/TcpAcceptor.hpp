@@ -3,6 +3,7 @@
 #include <expected>
 #include <system_error>
 
+
 #include "Net/Types.hpp"
 #include "TcpConnection.hpp"
 #include "Net/NetworkEnvironment.hpp"
@@ -20,6 +21,8 @@ namespace Ion::Net::TCP
 		[[nodiscard]]
 		std::expected<TcpConnection, std::error_code> accept() noexcept;
 
+		[[nodiscard]]
+		bool isInterrupted() const noexcept;
 		
 
 
@@ -28,7 +31,7 @@ namespace Ion::Net::TCP
 		const NetworkEnvironment* m_env;
 		class TcpAcceptorImpl;
 		std::unique_ptr<TcpAcceptorImpl> impl;
-		bool m_runnning{ true };
+		
 		
 
 

@@ -10,6 +10,8 @@
 
 #include <iostream>
 #include <utility>
+#include <stop_token>
+#include <functional>
 
 #include "Utility/Descriptor.hpp"
 #include "TcpAcceptor.hpp"
@@ -25,14 +27,14 @@ namespace Ion::Net::TCP
 	class TcpAcceptor::TcpAcceptorImpl
 	{
 
-		using WinSock = Ion::Utility::Descriptor<SOCKET, closesocket, INVALID_SOCKET>;
+		using WinSock = Ion::Utility::Descriptor<SOCKET, ::closesocket, INVALID_SOCKET>;
 
 		
 
 	public:
 
 		
-		TcpAcceptorImpl()
+		TcpAcceptorImpl(std::stop_token&& token)
 		{
 
 			const int yes = 1;
@@ -71,7 +73,7 @@ namespace Ion::Net::TCP
 					, std::error_code(WSAGetLastError(), std::system_category()));
 			}
 
-			WinSock ws(s);
+			WinSock ws{ s };
 
 			auto setsockoptResult = setsockopt(ws.get(), SOL_SOCKET, SO_REUSEADDR, (char*)&yes, sizeof(yes));
 
@@ -101,13 +103,27 @@ namespace Ion::Net::TCP
 			}
 
 			m_socket = std::move(ws);
+
+
+			m_stopCallback.emplace(std::move(token), [&socket = m_socket, &interrupted = m_interrupted]() {
+
+				//on windows closesocket is the correct way to interrupt a blocking accept call
+				std::ignore = socket.close();
+
+				//Set a flag that we have been interrupted
+				interrupted = true;
+			});
+
+			
+
+
+			
 		}
 
-		AcceptResult implAccept() 
+		AcceptResult implAccept() noexcept
 		{
 			socklen_t addr_size;
-			struct sockaddr_storage their_addr;
-			memset(&their_addr, 0, sizeof(their_addr));
+			struct sockaddr_storage their_addr = {};
 			addr_size = sizeof(their_addr);
 			
 
@@ -128,29 +144,43 @@ namespace Ion::Net::TCP
 
 		}
 
-		auto shutdown()
+		[[nodiscard]]
+		bool isInterrupted() const noexcept
 		{
-			return m_socket.close();
+			return m_interrupted;
 		}
 
 		
 
 	private:
+		//TODO: pass in as params
 		PCSTR m_nodeName = "0.0.0.0";
 		PCSTR m_serviceName = "8080";
 
+		/*
+		* m_socket and m_interrupted must outlive the m_stopCallback as it relies on them.
+		*/
+		std::atomic<bool> m_interrupted{ false };
+
 		WinSock m_socket;
+		
+		//Optional - defer initialization
+		//move_only_function - type erasure to allow a labda capture
+		std::optional<std::stop_callback<std::move_only_function<void()>>> m_stopCallback;
+
+		
 
 		auto utilityFormException() const {
 			return NetworkException("Setting up socket environment in windows failed. listen",std::error_code(WSAGetLastError(), std::system_category()));
 		}
-
+		
+		
 
 	};
 
 
 	TcpAcceptor::TcpAcceptor(const NetworkEnvironment& env)
-		: m_env(&env),impl(std::make_unique<TcpAcceptorImpl>())
+		: m_env(&env),impl(std::make_unique<TcpAcceptorImpl>(env.aquireStopToken()))
 	{
 
 	}
@@ -167,5 +197,12 @@ namespace Ion::Net::TCP
 		return TcpConnection(res.value(), *m_env);
 		
 	}
+
+	bool TcpAcceptor::isInterrupted() const noexcept
+	{
+		return impl->isInterrupted();
+	}
+
+	
 	
 }

@@ -40,13 +40,6 @@ namespace Ion::Net
 					, std::error_code(wsaResult, std::system_category()));
 			}
 
-
-
-			//Signal catching setup
-
-			
-
-
 		}
 
 		~EnvironmentImpl()
@@ -67,11 +60,6 @@ namespace Ion::Net
 		m_impl = std::make_unique<EnvironmentImpl>();
 
 		m_exists.store(true);
-
-
-
-		
-
 	}
 
 	NetworkEnvironment::~NetworkEnvironment() = default;
