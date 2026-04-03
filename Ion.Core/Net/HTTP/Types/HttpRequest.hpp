@@ -1,6 +1,6 @@
 #pragma once
 #include <span>
-#include "Net/HTTP/HttpTypes.hpp"
+#include "Net/HTTP/Types/HttpTypes.hpp"
 namespace Ion::Net::HTTP
 {
 	

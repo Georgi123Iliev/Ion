@@ -20,12 +20,16 @@ namespace Ion::Net::TCP
 		[[nodiscard]]
 		std::expected<TcpConnection, std::error_code> accept() noexcept;
 
+		
+
 
 	private:
 
 		const NetworkEnvironment* m_env;
 		class TcpAcceptorImpl;
 		std::unique_ptr<TcpAcceptorImpl> impl;
+		bool m_runnning{ true };
+		
 
 
 	};

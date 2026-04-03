@@ -51,18 +51,20 @@ namespace Ion::Net::TCP
 
 			if (buffer.size() > std::numeric_limits<int>::max())
 			{
-				
+				return std::unexpected(std::make_error_code(std::errc::value_too_large));
 			}
 
+			// std::byte* -> char* legitimate for socket I/O
 
-
-			//avoid narrowing
-			//reinterpret cast fine here???
 			auto bytesCount = ::recv(m_ws.get(), reinterpret_cast<char*>(buffer.data()), buffer.size(), 0);
 
 			if (SOCKET_ERROR == bytesCount)
 			{
 				return std::unexpected(std::error_code(WSAGetLastError(), std::system_category()));
+			}
+
+			if (bytesCount == 0) {
+				return std::unexpected(std::make_error_code(std::errc::connection_aborted));
 			}
 
 			
@@ -81,12 +83,13 @@ namespace Ion::Net::TCP
 
 			if (buffer.size() > std::numeric_limits<int>::max())
 			{
-				return std::unexpected(std::error_code());
+				return std::unexpected(std::make_error_code(std::errc::value_too_large));
 			}
 
 			int buffer_size = static_cast<int>(buffer.size());
 
 
+			// std::byte* -> char* legitimate for socket I/O
 
 			auto bytesCount = ::send(m_ws.get(), reinterpret_cast<const char*>(buffer.data()), buffer_size, 0);
 

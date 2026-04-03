@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup Label="ProjectConfigurations">
     <ProjectConfiguration Include="Debug|Win32">
@@ -164,49 +164,41 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="framework.h" />
-    <ClInclude Include="HttpContext.hpp" />
-    <ClInclude Include="Net\HTTP\HttpResponse.hpp" />
-    <ClInclude Include="Net\HTTP\HttpRequest.hpp" />
-    <ClInclude Include="Net\HTTP\RequestReader.hpp" />
-    <ClInclude Include="Net\HTTP\HttpTypes.hpp" />
-    <ClInclude Include="Net\Constants.hpp" />
+    <ClInclude Include="Net\HTTP\Types\Concepts.hpp" />
+    <ClInclude Include="Net\HTTP\Routing\DefaultHandlers.hpp" />
+    <ClInclude Include="Net\HTTP\Types\Header.hpp" />
+    <ClInclude Include="Net\HTTP\Types\HttpContext.hpp" />
+    <ClInclude Include="Net\HTTP\Types\HttpHead.hpp" />
+    <ClInclude Include="Net\HTTP\Types\HttpMethod.hpp" />
+    <ClInclude Include="Net\HTTP\Types\HttpRequest.hpp" />
+    <ClInclude Include="Net\HTTP\Types\HttpResponse.hpp" />
     <ClInclude Include="Net\HTTP\HttpServer.hpp" />
-    <ClInclude Include="Net\NetworkEnvironment.hpp" />
+    <ClInclude Include="Net\HTTP\Types\HttpTypes.hpp" />
+    <ClInclude Include="Net\HTTP\Parsing\ParsingWrapper.hpp" />
+    <ClInclude Include="Net\HTTP\Parsing\picohttpparser.h" />
+    <ClInclude Include="Net\HTTP\Types\Path.hpp" />
+    <ClInclude Include="Net\HTTP\RequestReader.hpp" />
+    <ClInclude Include="Net\HTTP\Routing\Router.hpp" />
+    <ClInclude Include="Net\HTTP\Routing\RouterBuilder.hpp" />
+    <ClInclude Include="Net\HTTP\Types\StatusCode.hpp" />
+    <ClInclude Include="Net\Constants.hpp" />
     <ClInclude Include="Net\Exceptions\NetworkException.hpp" />
+    <ClInclude Include="Net\NetworkEnvironment.hpp" />
     <ClInclude Include="Net\TCP\TcpAcceptor.hpp" />
     <ClInclude Include="Net\TCP\TcpConnection.hpp" />
     <ClInclude Include="Net\Types.hpp" />
-    <ClInclude Include="Parsing\ParsingWrapper.hpp" />
-    <ClInclude Include="Parsing\picohttpparser.h" />
     <ClInclude Include="pch.h" />
-    <ClInclude Include="Net\HTTP\Router.hpp" />
-    <ClInclude Include="Net\HTTP\RouterBuilder.hpp" />
     <ClInclude Include="Threading\SafeQueue.hpp" />
     <ClInclude Include="Threading\ThreadPool.hpp" />
     <ClInclude Include="Utility\Conversions.hpp" />
-    <ClInclude Include="Utility\nttp_callable_traits.hpp" />
     <ClInclude Include="Utility\Descriptor.hpp" />
+    <ClInclude Include="Utility\nttp_callable_traits.hpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="HttpContext.cpp" />
-    <ClCompile Include="Net\HTTP\HttpResponse.cpp" />
-    <ClCompile Include="Net\HTTP\HttpTypes.cpp" />
-    <ClCompile Include="Net\HTTP\RequestReader.cpp" />
+    <ClCompile Include="Net\HTTP\Routing\DefaultHandlers.cpp" />
     <ClCompile Include="Net\HTTP\HttpServer.cpp" />
-    <ClCompile Include="Ion.Core.cpp">
-      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Use</PrecompiledHeader>
-      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Use</PrecompiledHeader>
-      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Use</PrecompiledHeader>
-      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Use</PrecompiledHeader>
-    </ClCompile>
-    <ClCompile Include="Net\NetworkEnvironment_lin.cpp" />
-    <ClCompile Include="Net\NetworkEnvironment_win.cpp" />
-    <ClCompile Include="Net\Exceptions\NetworkException.cpp" />
-    <ClCompile Include="Net\TCP\TcpAcceptor_win.cpp" />
-    <ClCompile Include="Net\TCP\TcpConnection_win.cpp" />
-    <ClCompile Include="Parsing\FileName.cpp" />
-    <ClCompile Include="Parsing\ParsingWrapper.cpp" />
-    <ClCompile Include="Parsing\picohttpparser.c">
+    <ClCompile Include="Net\HTTP\Parsing\ParsingWrapper.cpp" />
+    <ClCompile Include="Net\HTTP\Parsing\picohttpparser.c">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">NotUsing</PrecompiledHeader>
       <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
       </PrecompiledHeaderFile>
@@ -220,19 +212,20 @@
       <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
       </PrecompiledHeaderFile>
     </ClCompile>
+    <ClCompile Include="Net\HTTP\RequestReader.cpp" />
+    <ClCompile Include="Net\HTTP\Routing\Router.cpp" />
+    <ClCompile Include="Net\NetworkEnvironment_lin.cpp" />
+    <ClCompile Include="Net\NetworkEnvironment_win.cpp" />
+    <ClCompile Include="Net\TCP\TcpAcceptor_win.cpp" />
+    <ClCompile Include="Net\TCP\TcpConnection_win.cpp" />
     <ClCompile Include="pch.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
     </ClCompile>
-    <ClCompile Include="Net\HTTP\Router.cpp" />
-    <ClCompile Include="RouterBuilder.cpp" />
-    <ClCompile Include="Source.cpp" />
-    <ClCompile Include="Threading\SafeQueue.cpp" />
     <ClCompile Include="Threading\ThreadPool.cpp" />
     <ClCompile Include="Utility\Conversions.cpp" />
-    <ClCompile Include="Utility\Descriptor.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

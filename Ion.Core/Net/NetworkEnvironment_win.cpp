@@ -39,6 +39,14 @@ namespace Ion::Net
 				throw NetworkException("Setting up socket environment in windows failed. WSAStartup"
 					, std::error_code(wsaResult, std::system_category()));
 			}
+
+
+
+			//Signal catching setup
+
+			
+
+
 		}
 
 		~EnvironmentImpl()
@@ -54,9 +62,19 @@ namespace Ion::Net
 			throw(std::logic_error("Only one environment can exist at a time"));
 		}
 
+
+
 		m_impl = std::make_unique<EnvironmentImpl>();
+
 		m_exists.store(true);
+
+
+
+		
+
 	}
 
 	NetworkEnvironment::~NetworkEnvironment() = default;
+
+
 }

@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
     <Filter Include="Source Files">
@@ -31,9 +31,21 @@
     <Filter Include="Net\HTTP">
       <UniqueIdentifier>{5028645f-d9c7-4cde-bf1c-64c9837722fd}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Net\HTTP\Parsing">
+      <UniqueIdentifier>{e3a1b2c4-d5f6-4789-abcd-0123456789ab}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Net\HTTP\Types">
+      <UniqueIdentifier>{f4b2c3d5-e6g7-5890-bcde-123456789abc}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Net\HTTP\Routing">
+      <UniqueIdentifier>{a1b2c3d4-e5f6-4789-bcde-0123456789ab}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="framework.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="pch.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Threading\SafeQueue.hpp">
@@ -42,14 +54,23 @@
     <ClInclude Include="Threading\ThreadPool.hpp">
       <Filter>Threading</Filter>
     </ClInclude>
-    <ClInclude Include="pch.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="Utility\Descriptor.hpp">
       <Filter>Utility</Filter>
     </ClInclude>
     <ClInclude Include="Utility\nttp_callable_traits.hpp">
       <Filter>Utility</Filter>
+    </ClInclude>
+    <ClInclude Include="Utility\Conversions.hpp">
+      <Filter>Utility</Filter>
+    </ClInclude>
+    <ClInclude Include="Net\Constants.hpp">
+      <Filter>Net</Filter>
+    </ClInclude>
+    <ClInclude Include="Net\Types.hpp">
+      <Filter>Net</Filter>
+    </ClInclude>
+    <ClInclude Include="Net\NetworkEnvironment.hpp">
+      <Filter>Net</Filter>
     </ClInclude>
     <ClInclude Include="Net\Exceptions\NetworkException.hpp">
       <Filter>Net\Exceptions</Filter>
@@ -60,70 +81,70 @@
     <ClInclude Include="Net\TCP\TcpConnection.hpp">
       <Filter>Net\TCP</Filter>
     </ClInclude>
-    <ClInclude Include="Net\Types.hpp">
-      <Filter>Net</Filter>
+    <ClInclude Include="Net\HTTP\Types\Concepts.hpp">
+      <Filter>Net\HTTP\Types</Filter>
     </ClInclude>
-    <ClInclude Include="Net\NetworkEnvironment.hpp">
-      <Filter>Net</Filter>
+    <ClInclude Include="Net\HTTP\Routing\DefaultHandlers.hpp">
+      <Filter>Net\HTTP\Routing</Filter>
     </ClInclude>
-    <ClInclude Include="Parsing\picohttpparser.h">
-      <Filter>Header Files</Filter>
+    <ClInclude Include="Net\HTTP\Types\Header.hpp">
+      <Filter>Net\HTTP\Types</Filter>
     </ClInclude>
-    <ClInclude Include="Parsing\ParsingWrapper.hpp">
-      <Filter>Header Files</Filter>
+    <ClInclude Include="Net\HTTP\Types\HttpContext.hpp">
+      <Filter>Net\HTTP\Types</Filter>
     </ClInclude>
-    <ClInclude Include="Utility\Conversions.hpp">
-      <Filter>Utility</Filter>
+    <ClInclude Include="Net\HTTP\Types\HttpHead.hpp">
+      <Filter>Net\HTTP\Types</Filter>
     </ClInclude>
-    <ClInclude Include="Net\Constants.hpp">
-      <Filter>Net</Filter>
+    <ClInclude Include="Net\HTTP\Types\HttpMethod.hpp">
+      <Filter>Net\HTTP\Types</Filter>
     </ClInclude>
-    <ClInclude Include="Net\HTTP\RequestReader.hpp">
-      <Filter>Header Files</Filter>
+    <ClInclude Include="Net\HTTP\Types\HttpRequest.hpp">
+      <Filter>Net\HTTP\Types</Filter>
     </ClInclude>
-    <ClInclude Include="Net\HTTP\HttpRequest.hpp">
-      <Filter>Net\HTTP</Filter>
-    </ClInclude>
-    <ClInclude Include="Net\HTTP\HttpResponse.hpp">
-      <Filter>Net\HTTP</Filter>
+    <ClInclude Include="Net\HTTP\Types\HttpResponse.hpp">
+      <Filter>Net\HTTP\Types</Filter>
     </ClInclude>
     <ClInclude Include="Net\HTTP\HttpServer.hpp">
       <Filter>Net\HTTP</Filter>
     </ClInclude>
-    <ClInclude Include="Net\HTTP\HttpTypes.hpp">
+    <ClInclude Include="Net\HTTP\Types\HttpTypes.hpp">
+      <Filter>Net\HTTP\Types</Filter>
+    </ClInclude>
+    <ClInclude Include="Net\HTTP\Types\Path.hpp">
+      <Filter>Net\HTTP\Types</Filter>
+    </ClInclude>
+    <ClInclude Include="Net\HTTP\RequestReader.hpp">
       <Filter>Net\HTTP</Filter>
     </ClInclude>
-    <ClInclude Include="HttpContext.hpp">
-      <Filter>Net\HTTP</Filter>
+    <ClInclude Include="Net\HTTP\Routing\Router.hpp">
+      <Filter>Net\HTTP\Routing</Filter>
     </ClInclude>
-    <ClInclude Include="Net\HTTP\Router.hpp">
-      <Filter>Net\HTTP</Filter>
+    <ClInclude Include="Net\HTTP\Routing\RouterBuilder.hpp">
+      <Filter>Net\HTTP\Routing</Filter>
     </ClInclude>
-    <ClInclude Include="Net\HTTP\RouterBuilder.hpp">
-      <Filter>Net\HTTP</Filter>
+    <ClInclude Include="Net\HTTP\Types\StatusCode.hpp">
+      <Filter>Net\HTTP\Types</Filter>
+    </ClInclude>
+    <ClInclude Include="Net\HTTP\Parsing\ParsingWrapper.hpp">
+      <Filter>Net\HTTP\Parsing</Filter>
+    </ClInclude>
+    <ClInclude Include="Net\HTTP\Parsing\picohttpparser.h">
+      <Filter>Net\HTTP\Parsing</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="Ion.Core.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="pch.cpp">
       <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Threading\SafeQueue.cpp">
-      <Filter>Threading</Filter>
     </ClCompile>
     <ClCompile Include="Threading\ThreadPool.cpp">
       <Filter>Threading</Filter>
     </ClCompile>
-    <ClCompile Include="Source.cpp">
-      <Filter>Source Files</Filter>
+    <ClCompile Include="Net\NetworkEnvironment_win.cpp">
+      <Filter>Net</Filter>
     </ClCompile>
-    <ClCompile Include="Utility\Descriptor.cpp">
-      <Filter>Utility</Filter>
-    </ClCompile>
-    <ClCompile Include="Net\Exceptions\NetworkException.cpp">
-      <Filter>Net\Exceptions</Filter>
+    <ClCompile Include="Net\NetworkEnvironment_lin.cpp">
+      <Filter>Net</Filter>
     </ClCompile>
     <ClCompile Include="Net\TCP\TcpAcceptor_win.cpp">
       <Filter>Net\TCP</Filter>
@@ -131,44 +152,26 @@
     <ClCompile Include="Net\TCP\TcpConnection_win.cpp">
       <Filter>Net\TCP</Filter>
     </ClCompile>
-    <ClCompile Include="Net\NetworkEnvironment_win.cpp">
-      <Filter>Net</Filter>
-    </ClCompile>
-    <ClCompile Include="Parsing\FileName.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Parsing\picohttpparser.c">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Parsing\ParsingWrapper.cpp">
-      <Filter>Source Files</Filter>
+    <ClCompile Include="Net\HTTP\Routing\DefaultHandlers.cpp">
+      <Filter>Net\HTTP\Routing</Filter>
     </ClCompile>
     <ClCompile Include="Net\HTTP\HttpServer.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Net\HTTP\Router.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>Net\HTTP</Filter>
     </ClCompile>
     <ClCompile Include="Net\HTTP\RequestReader.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>Net\HTTP</Filter>
     </ClCompile>
-    <ClCompile Include="Net\HTTP\HttpResponse.cpp">
-      <Filter>Source Files</Filter>
+    <ClCompile Include="Net\HTTP\Routing\Router.cpp">
+      <Filter>Net\HTTP\Routing</Filter>
+    </ClCompile>
+    <ClCompile Include="Net\HTTP\Parsing\ParsingWrapper.cpp">
+      <Filter>Net\HTTP\Parsing</Filter>
+    </ClCompile>
+    <ClCompile Include="Net\HTTP\Parsing\picohttpparser.c">
+      <Filter>Net\HTTP\Parsing</Filter>
     </ClCompile>
     <ClCompile Include="Utility\Conversions.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="RouterBuilder.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="HttpContext.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Net\NetworkEnvironment_lin.cpp">
-      <Filter>Net</Filter>
-    </ClCompile>
-    <ClCompile Include="Net\HTTP\HttpTypes.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>Utility</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

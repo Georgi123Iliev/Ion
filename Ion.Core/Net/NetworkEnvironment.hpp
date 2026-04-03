@@ -1,9 +1,15 @@
 #pragma once
-#include<memory>
-#include<atomic>
+#include <memory>
+#include <atomic>
+#include <csignal>
+#include <thread>
+#include <stop_token>
+
 
 namespace Ion::Net
 {
+
+	
 
 	class NetworkEnvironment
 	{
@@ -18,9 +24,18 @@ namespace Ion::Net
 		NetworkEnvironment& operator=(NetworkEnvironment&&) = delete;
 
 	private:
-		std::atomic<bool> m_exists{ 0 };
+
+
+
+		inline static std::atomic<bool> m_exists {false};
 		class EnvironmentImpl;
 		std::unique_ptr<EnvironmentImpl> m_impl;
+
+		
 	};
+
+	
+
+
 }
 

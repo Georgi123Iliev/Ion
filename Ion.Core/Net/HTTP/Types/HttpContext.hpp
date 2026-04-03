@@ -1,7 +1,10 @@
 #pragma once
 
+#include <span>
+#include <cstddef>
+
 #include "Net/TCP/TcpConnection.hpp"
-#include "Net/HTTP/HttpTypes.hpp"
+#include "Net/HTTP/Types/HttpHead.hpp"
 
 namespace Ion::Net::HTTP
 {

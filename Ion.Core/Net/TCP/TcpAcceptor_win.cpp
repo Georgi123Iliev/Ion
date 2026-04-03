@@ -128,6 +128,11 @@ namespace Ion::Net::TCP
 
 		}
 
+		auto shutdown()
+		{
+			return m_socket.close();
+		}
+
 		
 
 	private:
@@ -162,4 +167,5 @@ namespace Ion::Net::TCP
 		return TcpConnection(res.value(), *m_env);
 		
 	}
+	
 }

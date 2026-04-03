@@ -1,20 +1,24 @@
 #pragma once
-#include <concepts>
-#include "Net/HTTP/Router.hpp"
 
+#include "Net/HTTP/Routing/Router.hpp"
+#include "Net/HTTP/Types/Concepts.hpp"
 namespace Ion::Net::HTTP
 {
 	
+	template<typename T>
+	concept insertion_in_routing_table = map_like_insertion<T, HandlerID, HttpHandler>;
+
+	static_assert(insertion_in_routing_table<DefaultRoutingTable>);
 
 
 	template<typename T = DefaultRoutingTable>
-	requires is_routing_table<T>
+	requires is_routing_table<T> && insertion_in_routing_table<T>
 	class RouterBuilder
 	{
 	public:
 		RouterBuilder& addStaticRoute(HttpMethod method, Path path, HttpHandler handler)
 		{
-			m_internalTable[{method, path}] = handler;
+			m_internalTable[HandlerID{ method,path }] = handler;
 
 			return *this;
 		}
