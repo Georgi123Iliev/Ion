@@ -40,10 +40,9 @@ namespace Ion::Net::TCP
 			const int yes = 1;
 
 
-			ADDRINFOA hints;
+			ADDRINFOA hints = {};  //zero out struct
 			PADDRINFOA temp_res;
 
-			memset(&hints, 0, sizeof(hints)); //zero out struct
 			hints.ai_family = AF_UNSPEC; //IPv4 / IPv6
 			hints.ai_socktype = SOCK_STREAM; //TCP(like) socket
 			hints.ai_flags = AI_PASSIVE; // Fill ip
