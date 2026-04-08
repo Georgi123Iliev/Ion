@@ -13,6 +13,10 @@ Checks: >
   -cppcoreguidelines-pro-bounds-pointer-arithmetic,
   -cppcoreguidelines-pro-type-union-access,
   -cppcoreguidelines-macro-usage
+  -clang-diagnostic-pragma-once-outside-header,
+  -clang-diagnostic-pragma-pack,
+  -clang-diagnostic-microsoft-*,
+  -clang-diagnostic-unused-macros
 
 # Treat warnings as errors to force discipline (like Rust)
 WarningsAsErrors: '*'
