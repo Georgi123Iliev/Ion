@@ -50,12 +50,11 @@ namespace Ion::Net
 		}
 
 
-		/*
-		* m_stopSource clearly must outlive watchDog
-		*/
+	
 		std::stop_source m_stopSource;
 
-		std::jthread watchDog{ [&stopSource = m_stopSource]() {
+
+		std::jthread watchDog{ [stopSource = m_stopSource]() mutable {
 
 			using namespace std::literals::chrono_literals;
 
@@ -73,6 +72,8 @@ namespace Ion::Net
 			}
 
 			stopSource.request_stop();
+
+
 
 			//maybe should give it a bit of time before I allow sigint again?
 			

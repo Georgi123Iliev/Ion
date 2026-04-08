@@ -36,8 +36,8 @@ namespace Ion::Net
 
 			if (0 != wsaResult)
 			{
-				throw NetworkException("Setting up socket environment in windows failed. WSAStartup"
-					, std::error_code(wsaResult, std::system_category()));
+				throw NetworkException(std::error_code(wsaResult, std::system_category()),
+					"WSAStartup");
 			}
 
 		}

@@ -2,14 +2,15 @@
 #include<expected>
 #include <system_error>
 #include <memory>
-#include<span>
+#include <span>
+#include <filesystem>
 
 #include "Net/Types.hpp"
 #include "Net/NetworkEnvironment.hpp"
 
 namespace Ion::Net::TCP
 {
-	
+	namespace fs = std::filesystem;
 
 	class TcpConnection
 	{
@@ -23,8 +24,8 @@ namespace Ion::Net::TCP
 		TcpConnection(Net::Types::OpaqueHandle opaqueHandle, const NetworkEnvironment& env);
 
 
-		TcpConnection(TcpConnection&& other);
-		TcpConnection& operator=(TcpConnection&& other);
+		TcpConnection(TcpConnection&& other) noexcept;
+		TcpConnection& operator=(TcpConnection&& other) noexcept;
 	
 		[[nodiscard]] Net::Types::OpaqueHandle getHandle() const noexcept;
 		
@@ -32,7 +33,7 @@ namespace Ion::Net::TCP
 
 		[[nodiscard]] std::expected<std::span<const std::byte>, std::error_code> send(std::span< const std::byte> buffer);
 
-		[[nodiscard]] bool sendfile(std::string_view filename);
+		[[nodiscard]] std::expected<void, std::error_code> sendfile(fs::path path, std::span< const std::byte> head, std::span< const std::byte> tail);
 
 		~TcpConnection();
 	private:

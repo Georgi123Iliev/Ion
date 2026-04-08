@@ -5,13 +5,14 @@
 
 #define NOMINMAX
 
-#include <winsock2.h>
-#include <ws2tcpip.h>  
+
+
 #define WIN32_LEAN_AND_MEAN  // Say this...
 
 #include <windows.h>         // And now we can include that.
 #include <winsock2.h>        // And this.
-
+#include <mswsock.h>
+#pragma comment(lib, "Mswsock.lib")
 #pragma comment(lib, "ws2_32.lib")
 
 
@@ -30,18 +31,18 @@ namespace Ion::Net::TCP
 
 
 
-		using WinSock = Ion::Utility::Descriptor<SOCKET, closesocket, INVALID_SOCKET>;
+		using WinSock = Ion::Utility::Descriptor<SOCKET, ::closesocket, INVALID_SOCKET>;
 
 	public:
-		TcpConnectionImpl(SOCKET s)
-			: m_ws(s)
+		TcpConnectionImpl(SOCKET s) noexcept
+			: m_socket(s)
 		{
 
 		}
 
 		auto getHandle() const noexcept
 		{
-			return m_ws.get();
+			return m_socket.get();
 		}
 		
 	
@@ -56,11 +57,11 @@ namespace Ion::Net::TCP
 
 			// std::byte* -> char* legitimate for socket I/O
 
-			auto bytesCount = ::recv(m_ws.get(), reinterpret_cast<char*>(buffer.data()), buffer.size(), 0);
+			auto bytesCount = ::recv(m_socket.get(), reinterpret_cast<char*>(buffer.data()), buffer.size(), 0);
 
 			if (SOCKET_ERROR == bytesCount)
 			{
-				return std::unexpected(std::error_code(WSAGetLastError(), std::system_category()));
+				return std::unexpected(std::error_code(::WSAGetLastError(), std::system_category()));
 			}
 
 			if (bytesCount == 0) {
@@ -91,11 +92,11 @@ namespace Ion::Net::TCP
 
 			// std::byte* -> char* legitimate for socket I/O
 
-			auto bytesCount = ::send(m_ws.get(), reinterpret_cast<const char*>(buffer.data()), buffer_size, 0);
+			auto bytesCount = ::send(m_socket.get(), reinterpret_cast<const char*>(buffer.data()), buffer_size, 0);
 
 			if (SOCKET_ERROR == bytesCount)
 			{
-				return std::unexpected(std::error_code(WSAGetLastError(), std::system_category()));
+				return std::unexpected(std::error_code(::WSAGetLastError(), std::system_category()));
 			}
 
 			
@@ -104,17 +105,67 @@ namespace Ion::Net::TCP
 			return remainingToSendData;
 		}
 
+		[[nodiscard]]
+		std::expected<void,std::error_code> sendfile(fs::path&& path, std::span< const std::byte> head, std::span< const std::byte> tail)
+		{
+			
+			auto handle = ::CreateFileW(
+				path.c_str(),
+				GENERIC_READ,
+				FILE_SHARE_READ,
+				NULL, //lpSecurityAttributes
+				OPEN_EXISTING,
+				FILE_ATTRIBUTE_NORMAL,
+				NULL
+			);
+
+			if (handle == INVALID_HANDLE_VALUE)
+			{
+				return std::unexpected(std::error_code(::GetLastError(),std::system_category()));
+			}
+
+			Utility::Descriptor<HANDLE,::CloseHandle, INVALID_HANDLE_VALUE> fileHandle(handle);
+
+			TRANSMIT_FILE_BUFFERS transmitFileBuffers
+			{
+				.Head = const_cast<std::byte*>(head.data()),
+				.HeadLength = static_cast<DWORD>(head.size()),
+				.Tail = const_cast<std::byte*>(tail.data()),
+				.TailLength = static_cast<DWORD>(tail.size())
+			};
+
+
+			auto transmitResult = ::TransmitFile(
+				m_socket.get(),
+				fileHandle.get(),
+				0, //0 -> transmit entire file
+				0, //default number of bytes per send
+				NULL, //not overlapped
+				&transmitFileBuffers,
+				NULL
+
+			);
+
+			if (transmitResult == FALSE)
+			{
+				return std::unexpected(std::error_code(::GetLastError(), std::system_category()));
+			}
+
+			return {};
+		}
+
+
 
 	private:
-		WinSock m_ws;
+		WinSock m_socket;
 
 		
 	};
 
 
 
-	TcpConnection::TcpConnection(TcpConnection&& other) = default;
-	TcpConnection& TcpConnection::operator=(TcpConnection&& other) = default;
+	TcpConnection::TcpConnection(TcpConnection&& other) noexcept = default;
+	TcpConnection& TcpConnection::operator=(TcpConnection&& other) noexcept = default;
 
 	Net::Types::OpaqueHandle TcpConnection::getHandle() const noexcept
 	{
@@ -136,6 +187,11 @@ namespace Ion::Net::TCP
 	SendResult_t TcpConnection::send(std::span<const std::byte> buffer)
 	{
 		return m_impl->send(buffer);
+	}
+	
+	std::expected<void, std::error_code>  TcpConnection::sendfile(fs::path path, std::span< const std::byte> head, std::span< const std::byte> tail)
+	{
+		return m_impl->sendfile(std::move(path),head,tail);
 	}
 
 }

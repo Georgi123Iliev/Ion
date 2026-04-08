@@ -56,8 +56,8 @@ namespace Ion::Net::TCP
 
 			if (0 != getaddrinfoResult)
 			{
-				throw NetworkException("Setting up socket environment in windows failed. getaddrinfo"
-					, std::error_code(getaddrinfoResult, std::system_category()));
+				throw NetworkException(getaddrinfoResult, std::system_category()
+					,"DNS resolution");
 			}
 
 			auto deleter = [](PADDRINFOA p) noexcept {::freeaddrinfo(p); };
@@ -68,18 +68,19 @@ namespace Ion::Net::TCP
 
 			if (INVALID_SOCKET == s)
 			{
-				throw NetworkException("Setting up socket environment in windows failed. socket"
-					, std::error_code(WSAGetLastError(), std::system_category()));
+				throw NetworkException(::WSAGetLastError(),std::system_category(),"Socket creation");
 			}
 
 			WinSock ws{ s };
 
-			auto setsockoptResult = setsockopt(ws.get(), SOL_SOCKET, SO_REUSEADDR, (char*)&yes, sizeof(yes));
+			// Windows specific: Prevent port hijacking. 
+			// Unlike Linux, SO_REUSEADDR on Windows allows other apps to steal bound port
+			// SO_EXCLUSIVEADDRUSE does not so it is safer here.
+			auto setsockoptResult = setsockopt(ws.get(), SOL_SOCKET, SO_EXCLUSIVEADDRUSE, (char*)&yes, sizeof(yes));
 
 			if (0 != setsockoptResult)
 			{
-				throw NetworkException("Setting up socket environment in windows failed. setsockopt"
-					, std::error_code(WSAGetLastError(), std::system_category()));
+				throw NetworkException(::WSAGetLastError(), std::system_category(), "setsockopt EXCLUSIVEADDRUSE");
 			}
 
 
@@ -89,16 +90,14 @@ namespace Ion::Net::TCP
 
 			if (0 != bindResult)
 			{
-				throw NetworkException("Setting up socket environment in windows failed. bind"
-					, std::error_code(WSAGetLastError(), std::system_category()));
+				throw NetworkException(::WSAGetLastError(), std::system_category(), "bind");
 			}
 
 			auto listenResult = listen(ws.get(), 10);
 
 			if (0 != listenResult)
 			{
-				throw NetworkException("Setting up socket environment in windows failed. listen"
-					, std::error_code(WSAGetLastError(), std::system_category()));
+				throw NetworkException(::WSAGetLastError(), std::system_category(), "listen");
 			}
 
 			m_socket = std::move(ws);
@@ -107,6 +106,8 @@ namespace Ion::Net::TCP
 			m_stopCallback.emplace(std::move(token), [&socket = m_socket, &interrupted = m_interrupted]() {
 
 				//on windows closesocket is the correct way to interrupt a blocking accept call
+				// it is very important to use the method to close here as it avoids a double close down the line.
+				// ::closesocket most definetly should not be used directly
 				std::ignore = socket.close();
 
 				//Set a flag that we have been interrupted
@@ -133,7 +134,7 @@ namespace Ion::Net::TCP
 
 			if (new_s == INVALID_SOCKET)
 			{
-				return std::unexpected(std::error_code(WSAGetLastError(), std::system_category()));
+				return std::unexpected(std::error_code(::WSAGetLastError(), std::system_category()));
 			}
 
 
@@ -168,11 +169,6 @@ namespace Ion::Net::TCP
 		std::optional<std::stop_callback<std::move_only_function<void()>>> m_stopCallback;
 
 		
-
-		auto utilityFormException() const {
-			return NetworkException("Setting up socket environment in windows failed. listen",std::error_code(WSAGetLastError(), std::system_category()));
-		}
-		
 		
 
 	};
@@ -193,7 +189,16 @@ namespace Ion::Net::TCP
 		if (!res)
 			return std::unexpected(res.error());
 
-		return TcpConnection(res.value(), *m_env);
+
+		//fulfilling noexceptness
+		try
+		{
+			return TcpConnection(res.value(), *m_env);
+		}
+		catch (std::bad_alloc)
+		{
+			return std::unexpected(std::make_error_code(std::errc::not_enough_memory));
+		}
 		
 	}
 
