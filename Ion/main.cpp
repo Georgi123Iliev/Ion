@@ -6,6 +6,8 @@
 #include "Net/HTTP/Routing/RouterBuilder.hpp"
 #include "Utility/Conversions.hpp"
 
+namespace fs = std::filesystem;
+
 int main()
 {
 
@@ -31,7 +33,6 @@ int main()
 		
 		
 		};
-
 
 
 	RouterBuilder rb;
