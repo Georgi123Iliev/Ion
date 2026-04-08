@@ -132,6 +132,9 @@
     <ClInclude Include="Net\HTTP\Parsing\picohttpparser.h">
       <Filter>Net\HTTP\Parsing</Filter>
     </ClInclude>
+    <ClInclude Include="Net\HTTP\HttpSession.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="pch.cpp">
@@ -172,6 +175,9 @@
     </ClCompile>
     <ClCompile Include="Utility\Conversions.cpp">
       <Filter>Utility</Filter>
+    </ClCompile>
+    <ClCompile Include="Net\HTTP\HttpSession.cpp">
+      <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

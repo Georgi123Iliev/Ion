@@ -3,7 +3,7 @@
 #include <span>
 #include <cstddef>
 
-namespace Ion::Net::TCP { class TcpConnection; }
+namespace Ion::Net::TCP { class TcpConnection; } //forward declaration
 
 namespace Ion::Net::HTTP
 {

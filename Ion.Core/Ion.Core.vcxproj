@@ -164,6 +164,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="framework.h" />
+    <ClInclude Include="Net\HTTP\HttpSession.hpp" />
     <ClInclude Include="Net\HTTP\Types\Concepts.hpp" />
     <ClInclude Include="Net\HTTP\Routing\DefaultHandlers.hpp" />
     <ClInclude Include="Net\HTTP\Types\Header.hpp" />
@@ -195,6 +196,7 @@
     <ClInclude Include="Utility\nttp_callable_traits.hpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Net\HTTP\HttpSession.cpp" />
     <ClCompile Include="Net\HTTP\Routing\DefaultHandlers.cpp" />
     <ClCompile Include="Net\HTTP\HttpServer.cpp" />
     <ClCompile Include="Net\HTTP\Parsing\ParsingWrapper.cpp" />

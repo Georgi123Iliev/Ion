@@ -26,7 +26,7 @@ namespace Ion::Net::HTTP
 
 			if (!recvResult)
 			{
-				return std::unexpected(std::error_code());
+				return std::unexpected(recvResult.error());
 			}
 
 			auto recvBytes = recvResult.value();

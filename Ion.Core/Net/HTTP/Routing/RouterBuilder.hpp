@@ -22,12 +22,14 @@ namespace Ion::Net::HTTP
 
 			return *this;
 		}
-
+		
+		[[nodiscard]]
 		Router<T> build() const
 		{
 			return { m_internalTable };
 		}
 
+		[[nodiscard]]
 		Router<T> consume()
 		{
 			return { std::move(m_internalTable) };

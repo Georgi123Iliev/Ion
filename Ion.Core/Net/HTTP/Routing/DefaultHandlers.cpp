@@ -11,7 +11,7 @@ std::span<const std::byte> Ion::Net::HTTP::notFound(TCP::TcpConnection& conn, co
 		"Content-Type: text/plain\r\n"
 		"Content-Length: 13\r\n"
 		"Connection: close\r\n"
-		"\r\n"
+		"\r\n" 
 		"404 Not Found";
 
 	auto responseBytes = Utility::toByteSpan(notFoundResponse);
@@ -20,3 +20,5 @@ std::span<const std::byte> Ion::Net::HTTP::notFound(TCP::TcpConnection& conn, co
 
 	return spillover;
 }
+
+
