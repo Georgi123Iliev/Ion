@@ -2,25 +2,12 @@
 #include<stdexcept>
 #include<system_error>
 
-namespace Ion::Net //::Exceptions?
+namespace Ion::Net
 {
-
-	class NetworkException : std::runtime_error
-	{
+	//only semantically different to system error
+	class NetworkException : public std::system_error {
 	public:
-		NetworkException(const char* msg, std::error_code err)
-			: std::runtime_error(msg), m_err(err)
-		{
-		}
-
-		auto getErr() const noexcept
-		{
-			return m_err;
-		}
-
-	private:
-		std::error_code m_err;
-
+		using std::system_error::system_error;
 	};
 }
 
