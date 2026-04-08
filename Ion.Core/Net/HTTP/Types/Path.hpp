@@ -1,9 +1,12 @@
 #pragma once
 
 #include <string_view>
+#include <filesystem>
 
 namespace Ion::Net::HTTP
 {
+	namespace fs = std::filesystem;
+
 	struct Path
 	{
 		Path(std::string_view path)
@@ -11,10 +14,9 @@ namespace Ion::Net::HTTP
 		{
 		}
 
-		bool operator==(const Path& other) const
-		{
-			return path == other.path;
-		}
+		operator fs::path() const { return { path }; }
+
+		bool operator==(const Path& other) const = default;
 
 		std::string_view path;
 	};
