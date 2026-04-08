@@ -4,6 +4,7 @@
 #include <span>
 
 #include "ParsingWrapper.hpp"
+#include "Net/Constants.hpp"
 
 namespace Ion::Net::HTTP::Parsing
 {
@@ -28,9 +29,7 @@ namespace Ion::Net::HTTP::Parsing
 
 		struct phr_header* headers_internal = lastParse.headers.data();
 
-		//static_assert(false, "MISTAKE SHRINKING HEADER ON INCOMPLETE READ");
-
-		size_t num_headers = lastParse.headers.size();
+		size_t num_headers = Ion::Net::Constants::MAX_HEADERS;
 
 		size_t last_len = lastParse.lastLen;
 

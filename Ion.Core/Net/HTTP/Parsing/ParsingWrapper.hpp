@@ -16,6 +16,7 @@ namespace Ion::Net::HTTP::Parsing
 		std::string_view path;
 		int minorVersion;
 		std::span<phr_header> headers;
+
 		size_t lastLen;
 	};
 
